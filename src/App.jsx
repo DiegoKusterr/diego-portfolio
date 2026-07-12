@@ -175,18 +175,11 @@ function ExternalLink({ link, label, className = '' }) {
   );
 }
 
-function ProjectActionLink({ project, link, className = '' }) {
-  if (!isActiveLink(link)) {
-    return null;
-  }
-
-  const showDemoNote = link?.type === 'demo' && project?.demoNote;
-
+function getProjectDemoLink(links) {
   return (
-    <div className="action-link-group">
-      <ExternalLink link={link} className={className} />
-      {showDemoNote ? <p className="action-note">{project.demoNote}</p> : null}
-    </div>
+    links.find((link) => link.type === 'demo') ??
+    links.find((link) => link.label?.toLowerCase().includes('demo')) ??
+    null
   );
 }
 
@@ -380,6 +373,7 @@ function ProjectVisual({ project, variant = 'card' }) {
 
 function ProjectCard({ project, isSelected, onSelect }) {
   const activeLinks = getProjectLinks(project);
+  const demoLink = getProjectDemoLink(activeLinks);
 
   return (
     <article className={['project-card', isSelected ? 'is-selected' : ''].filter(Boolean).join(' ')} id={`project-${project.id}`}>
@@ -397,19 +391,23 @@ function ProjectCard({ project, isSelected, onSelect }) {
         <ProjectVisual project={project} variant="card" />
       </div>
 
-      <div className="project-actions">
-        <button
-          type="button"
-          className="button-link button-link-primary"
-          onClick={() => onSelect(project.id, 'case-study')}
-          aria-label={`${isSelected ? 'Viewing' : 'View'} case study for ${project.title}`}
-        >
-          {isSelected ? 'Viewing case study' : 'View case study'}
-        </button>
+      <div className="project-actions-block">
+        <div className="project-actions">
+          <button
+            type="button"
+            className="button-link button-link-primary"
+            onClick={() => onSelect(project.id, 'case-study')}
+            aria-label={`${isSelected ? 'Viewing' : 'View'} case study for ${project.title}`}
+          >
+            {isSelected ? 'Viewing case study' : 'View case study'}
+          </button>
 
-        {activeLinks.map((link) => (
-          <ProjectActionLink key={`${project.id}-${link.label}`} project={project} link={link} />
-        ))}
+          {activeLinks.map((link) => (
+            <ExternalLink key={`${project.id}-${link.label}`} link={link} />
+          ))}
+        </div>
+
+        {demoLink && project.demoNote ? <p className="project-action-note">{project.demoNote}</p> : null}
       </div>
     </article>
   );
@@ -474,13 +472,13 @@ function CaseStudy({ project, detailsOpen, onToggleDetails, onClose }) {
 
               <div className="case-actions">
                 {primaryLink ? (
-                  <ProjectActionLink project={project} link={primaryLink} className="button-link-showcase" />
+                  <ExternalLink link={primaryLink} className="button-link-showcase" />
                 ) : null}
 
                 {secondaryLinks.length ? (
                   <div className="case-links case-links-secondary">
                     {secondaryLinks.map((link) => (
-                      <ProjectActionLink key={`${project.id}-${link.label}`} project={project} link={link} />
+                      <ExternalLink key={`${project.id}-${link.label}`} link={link} />
                     ))}
                   </div>
                 ) : null}

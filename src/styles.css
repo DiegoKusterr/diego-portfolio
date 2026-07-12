@@ -758,16 +758,17 @@ img {
   grid-area: actions;
   margin-top: 0;
   align-self: end;
-  align-items: stretch;
+  align-items: flex-start;
 }
 
-.action-link-group {
+.project-actions-block {
+  grid-area: actions;
   display: grid;
-  gap: 0.32rem;
-  align-content: start;
+  gap: 0.34rem;
+  align-self: end;
 }
 
-.action-note {
+.project-action-note {
   margin: 0;
   max-width: 16rem;
   color: var(--text-muted);
@@ -862,19 +863,8 @@ img {
 .case-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.66rem;
-}
-
-.case-actions .action-note {
-  max-width: 18rem;
-}
-
-.project-actions .button-link,
-.case-actions .button-link,
-.hero-actions .button-link,
-.contact-links .button-link {
-  min-height: 2.12rem;
 }
 
 .tag-list-quiet {
@@ -882,9 +872,6 @@ img {
 }
 
 .button-link-showcase {
-  min-height: 2.26rem;
-  padding: 0.46rem 0.98rem;
-  font-size: 0.82rem;
   font-weight: 600;
 }
 

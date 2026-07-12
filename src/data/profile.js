@@ -1,7 +1,7 @@
 const email = 'diegokusterma@gmail.com';
 const linkedinUrl = 'https://www.linkedin.com/in/diego-k%C3%BCster-marqu%C3%A9s/';
 const githubUrl = 'https://github.com/DiegoKusterr';
-const cvUrl = '/cv/Diego_Kuster_Marques_CV.pdf';
+const cvUrl = '/cv/Diego_Kuster_Marques_EN.pdf';
 const bookMeetingUrl = 'https://calendly.com/diegokusterma/30min';
 
 export const profile = {
@@ -40,20 +40,20 @@ export const profile = {
   ],
   skills: [
     {
-      group: 'Core Data Stack',
-      items: ['Python', 'SQL', 'Snowflake', 'BigQuery', 'Power BI', 'Git', 'Azure DevOps'],
+      group: 'Programming/ML',
+      items: ['Python', 'SQL', 'scikit-learn', 'ML models', 'R'],
     },
     {
-      group: 'Data Engineering & Analytics Engineering',
-      items: ['PySpark', 'Apache Spark', 'dbt', 'DuckDB', 'Parquet', 'ETL', 'Data Modeling', 'Data Quality'],
+      group: 'Data Eng',
+      items: ['Snowflake', 'BigQuery', 'dbt', 'Spark (PySpark)', 'ETL', 'GCP'],
     },
     {
-      group: 'Machine Learning & Data Apps',
-      items: ['scikit-learn', 'ML models', 'FastAPI', 'Flask', 'Docker', 'REST APIs', 'SQLite'],
+      group: 'Apps/DevOps',
+      items: ['FastAPI', 'Docker', 'Git', 'Azure DevOps'],
     },
     {
-      group: 'BI & Automation',
-      items: ['Power Query', 'DAX', 'Power Automate', 'Excel/VBA', 'MicroStrategy', 'n8n'],
+      group: 'BI/Automation',
+      items: ['Power BI', 'n8n', 'Power Automate', 'Excel/VBA'],
     },
   ],
   contactNote:
