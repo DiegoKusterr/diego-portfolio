@@ -18,6 +18,11 @@ export const projects = [
         url: 'https://prediction-of-fundamental-financial.onrender.com/',
         type: 'demo',
       },
+      {
+        label: 'View Repository',
+        url: 'https://github.com/DiegoKusterr/financial-scoring-ml-system',
+        type: 'repository',
+      },
     ],
     images: {
       hero: '/assets/projects/financial-scoring/hero.png',
@@ -161,7 +166,13 @@ export const projects = [
       'Built a Python backend to validate JSON records, detect duplicate or consolidation candidates, score review priority and generate operational outputs for human-in-the-loop correction.',
     proofPoints: ['Validation rules', 'Entity resolution', 'Review prioritisation'],
     stack: ['Python', 'JSON validation', 'Data Quality', 'Duplicate Detection', 'Django API'],
-    links: [],
+    links: [
+      {
+        label: 'View Repository',
+        url: 'https://github.com/DiegoKusterr/cultural-facilities-data-quality-backend',
+        type: 'repository',
+      },
+    ],
     gallery: [
       {
         src: '/assets/projects/pitec/pitec-data-quality-main.png',
@@ -305,7 +316,13 @@ export const projects = [
       'Built a FastAPI-based assistant integrating Whisper transcription, Ollama-based feedback, SQLite memory and progress tracking.',
     proofPoints: ['Whisper transcription', 'Ollama feedback loop', 'Memory persistence'],
     stack: ['Python', 'FastAPI', 'Ollama', 'Whisper', 'SQLite'],
-    links: [],
+    links: [
+      {
+        label: 'View Repository',
+        url: 'https://github.com/DiegoKusterr/ai-german-tutor-system',
+        type: 'repository',
+      },
+    ],
     gallery: [
       {
         src: '/assets/projects/german-tutor/ai-german-tutor-conversation.png',

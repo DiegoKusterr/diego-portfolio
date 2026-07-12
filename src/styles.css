@@ -13,6 +13,14 @@
   --accent: #72a6ff;
   --accent-soft: rgba(114, 166, 255, 0.12);
   --accent-glow: rgba(114, 166, 255, 0.16);
+  --demo-accent: #14b8a6;
+  --demo-accent-strong: #0f9f8f;
+  --demo-accent-glow: rgba(20, 184, 166, 0.26);
+  --repo-border: #7c83c9;
+  --repo-border-soft: #64748b;
+  --repo-surface: rgba(18, 26, 40, 0.92);
+  --repo-surface-strong: rgba(28, 34, 54, 0.98);
+  --repo-text: #d5dcf8;
   --shadow-soft: 0 20px 44px rgba(0, 0, 0, 0.16);
   --shadow-card: 0 16px 30px rgba(0, 0, 0, 0.12);
   --radius-xl: 24px;
@@ -290,6 +298,44 @@ img {
 .button-link-primary:focus-visible {
   color: #ffffff;
   filter: brightness(0.99);
+}
+
+.button-link-demo {
+  border-color: color-mix(in srgb, var(--demo-accent) 84%, white 8%);
+  background: linear-gradient(135deg, var(--demo-accent) 0%, var(--demo-accent-strong) 100%);
+  color: #f5fffd;
+  box-shadow: 0 12px 26px rgba(8, 110, 101, 0.22);
+}
+
+.button-link-demo:hover,
+.button-link-demo:focus-visible {
+  border-color: color-mix(in srgb, var(--demo-accent) 96%, white 12%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--demo-accent) 90%, white 10%) 0%,
+    color-mix(in srgb, var(--demo-accent-strong) 92%, #04211d 8%) 100%
+  );
+  color: #ffffff;
+  box-shadow: 0 16px 30px var(--demo-accent-glow);
+}
+
+.button-link-repository {
+  border-color: color-mix(in srgb, var(--repo-border) 68%, var(--repo-border-soft) 32%);
+  background: linear-gradient(180deg, var(--repo-surface-strong), var(--repo-surface));
+  color: var(--repo-text);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.button-link-repository:hover,
+.button-link-repository:focus-visible {
+  border-color: color-mix(in srgb, var(--repo-border) 88%, white 10%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--repo-surface-strong) 86%, var(--repo-border) 14%),
+    color-mix(in srgb, var(--repo-surface) 82%, var(--repo-border-soft) 18%)
+  );
+  color: #eef2ff;
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.22);
 }
 
 .button-link-accent {
@@ -712,6 +758,7 @@ img {
   grid-area: actions;
   margin-top: 0;
   align-self: end;
+  align-items: stretch;
 }
 
 .visual-frame.is-card .diagram-list {
@@ -805,10 +852,11 @@ img {
   gap: 0.66rem;
 }
 
-.case-links-secondary .button-link {
-  border-color: color-mix(in srgb, var(--line) 92%, transparent);
-  background: color-mix(in srgb, var(--surface-soft) 38%, transparent);
-  color: var(--text-soft);
+.project-actions .button-link,
+.case-actions .button-link,
+.hero-actions .button-link,
+.contact-links .button-link {
+  min-height: 2.12rem;
 }
 
 .tag-list-quiet {
@@ -818,19 +866,13 @@ img {
 .button-link-showcase {
   min-height: 2.26rem;
   padding: 0.46rem 0.98rem;
-  border-color: color-mix(in srgb, var(--accent) 84%, white 8%);
-  background: linear-gradient(135deg, #8ec1ff 0%, #5d8fe5 48%, #315ea9 100%);
-  color: #ffffff;
   font-size: 0.82rem;
   font-weight: 600;
-  box-shadow: 0 14px 28px rgba(28, 72, 145, 0.28);
 }
 
 .button-link-showcase:hover,
 .button-link-showcase:focus-visible {
-  border-color: color-mix(in srgb, var(--accent) 96%, white 12%);
   color: #ffffff;
-  box-shadow: 0 18px 34px rgba(28, 72, 145, 0.34);
 }
 
 .inline-action-ghost {

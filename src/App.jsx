@@ -158,11 +158,13 @@ function ExternalLink({ link, label, className = '' }) {
   const href = getLinkHref(link);
   const isExternal = href.startsWith('http');
   const resolvedLabel = label ?? link.label;
+  const typeClassName =
+    link?.type === 'demo' ? 'button-link-demo' : link?.type === 'repository' ? 'button-link-repository' : '';
 
   return (
     <a
       href={href}
-      className={['button-link', className].filter(Boolean).join(' ')}
+      className={['button-link', typeClassName, className].filter(Boolean).join(' ')}
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noopener noreferrer' : undefined}
       download={link.download ? '' : undefined}
