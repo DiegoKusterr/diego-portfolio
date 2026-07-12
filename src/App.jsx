@@ -175,6 +175,21 @@ function ExternalLink({ link, label, className = '' }) {
   );
 }
 
+function ProjectActionLink({ project, link, className = '' }) {
+  if (!isActiveLink(link)) {
+    return null;
+  }
+
+  const showDemoNote = link?.type === 'demo' && project?.demoNote;
+
+  return (
+    <div className="action-link-group">
+      <ExternalLink link={link} className={className} />
+      {showDemoNote ? <p className="action-note">{project.demoNote}</p> : null}
+    </div>
+  );
+}
+
 function BackgroundNetwork() {
   return (
     <div className="background-network" aria-hidden="true">
@@ -393,7 +408,7 @@ function ProjectCard({ project, isSelected, onSelect }) {
         </button>
 
         {activeLinks.map((link) => (
-          <ExternalLink key={`${project.id}-${link.label}`} link={link} />
+          <ProjectActionLink key={`${project.id}-${link.label}`} project={project} link={link} />
         ))}
       </div>
     </article>
@@ -459,13 +474,13 @@ function CaseStudy({ project, detailsOpen, onToggleDetails, onClose }) {
 
               <div className="case-actions">
                 {primaryLink ? (
-                  <ExternalLink link={primaryLink} className="button-link-showcase" />
+                  <ProjectActionLink project={project} link={primaryLink} className="button-link-showcase" />
                 ) : null}
 
                 {secondaryLinks.length ? (
                   <div className="case-links case-links-secondary">
                     {secondaryLinks.map((link) => (
-                      <ExternalLink key={`${project.id}-${link.label}`} link={link} />
+                      <ProjectActionLink key={`${project.id}-${link.label}`} project={project} link={link} />
                     ))}
                   </div>
                 ) : null}

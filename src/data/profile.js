@@ -41,7 +41,7 @@ export const profile = {
   skills: [
     {
       group: 'Core Data Stack',
-      items: ['Python', 'SQL', 'Snowflake', 'Power BI', 'FastAPI', 'REST APIs', 'Git', 'Azure DevOps'],
+      items: ['Python', 'SQL', 'Snowflake', 'BigQuery', 'Power BI', 'Git', 'Azure DevOps'],
     },
     {
       group: 'Data Engineering & Analytics Engineering',
@@ -49,7 +49,7 @@ export const profile = {
     },
     {
       group: 'Machine Learning & Data Apps',
-      items: ['ML models', 'scikit-learn', 'XGBoost', 'Flask', 'Docker', 'SQLite', 'Ollama', 'Whisper'],
+      items: ['scikit-learn', 'ML models', 'FastAPI', 'Flask', 'Docker', 'REST APIs', 'SQLite'],
     },
     {
       group: 'BI & Automation',

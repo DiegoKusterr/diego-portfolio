@@ -12,6 +12,7 @@ export const projects = [
       'Built a reproducible Python pipeline to process financial statement data, compare models and expose predictions through an interactive Flask dashboard.',
     proofPoints: ['Walk-forward validation', 'Scoring pipeline', 'Flask dashboard'],
     stack: ['Python', 'pandas', 'XGBoost', 'Flask', 'Walk-forward validation'],
+    demoNote: 'First launch may take up to 60 seconds while the demo wakes up.',
     links: [
       {
         label: 'Live Scoring Demo',
@@ -239,6 +240,7 @@ export const projects = [
       'Built a self-hosted analytics app with FastAPI services, SQLite persistence and dashboard views for portfolio composition, dividends, returns and exposure.',
     proofPoints: ['Portfolio tracking', 'Financial APIs', 'Decision dashboards'],
     stack: ['Python', 'FastAPI', 'SQLite', 'REST APIs', 'Chart.js'],
+    demoNote: 'First launch may take up to 60 seconds while the demo wakes up.',
     links: [
       {
         label: 'Live Portfolio Demo',
