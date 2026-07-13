@@ -57,15 +57,29 @@ function joinWithDots(items) {
   return items.join(' \u00b7 ');
 }
 
-function scrollToId(id) {
+const NAV_SECTION_IDS = ['work', 'projects', 'skills', 'contact'];
+
+function getNavSection(sectionId) {
+  return sectionId === 'case-study' ? 'projects' : sectionId;
+}
+
+function scrollToId(id, headerOffset = 0) {
   if (typeof window === 'undefined') {
     return;
   }
 
   window.requestAnimationFrame(() => {
-    document.getElementById(id)?.scrollIntoView({
+    const element = document.getElementById(id);
+
+    if (!element) {
+      return;
+    }
+
+    const top = Math.max(element.getBoundingClientRect().top + window.scrollY - headerOffset - 16, 0);
+
+    window.scrollTo({
+      top,
       behavior: 'smooth',
-      block: 'start',
     });
   });
 }
@@ -214,22 +228,16 @@ function BackgroundNetwork() {
   );
 }
 
-function Header({ profileData, links, activeSection, hasCaseStudy, onNavClick }) {
+function Header({ profileData, links, activeSection, onNavClick, headerRef }) {
   const navItems = [
     { id: 'projects', label: 'Projects', href: '#projects', sectionKey: 'projects', isActive: activeSection === 'projects' },
-    {
-      id: 'work',
-      label: 'Work',
-      href: hasCaseStudy ? '#case-study' : '#work',
-      sectionKey: hasCaseStudy ? 'case-study' : 'work',
-      isActive: activeSection === 'work' || activeSection === 'case-study',
-    },
+    { id: 'work', label: 'Work', href: '#work', sectionKey: 'work', isActive: activeSection === 'work' },
     { id: 'skills', label: 'Skills', href: '#skills', sectionKey: 'skills', isActive: activeSection === 'skills' },
-    { id: 'reach-out', label: 'Reach Out', href: '#reach-out', sectionKey: 'reach-out', isActive: activeSection === 'reach-out' },
+    { id: 'contact', label: 'Reach Out', href: '#contact', sectionKey: 'contact', isActive: activeSection === 'contact' },
   ];
 
   return (
-    <header className="site-header">
+    <header ref={headerRef} className="site-header">
       <div className="site-container header-layout">
         <a href="#top" className="brand-block">
           <span className="brand-name">{profileData.name}</span>
@@ -291,7 +299,7 @@ function Hero({ profileData, links, heroRef }) {
 
 function CredibilityStrip({ items }) {
   return (
-    <section id="work" className="credibility-strip" aria-label="Credibility">
+    <section id="work" className="credibility-strip" aria-label="Professional experience">
       <div className="site-container">
         <ul className="credibility-ribbon">
           {items.map((item) => (
@@ -562,7 +570,7 @@ function Contact({ note, availabilityLine, links }) {
   const hasMeeting = Boolean(links.meeting);
 
   return (
-    <footer id="reach-out" className="contact-section">
+    <footer id="contact" className="contact-section">
       <div className="site-container contact-shell">
         <div className="contact-copy-column">
           <div className="contact-copy">
@@ -616,7 +624,27 @@ export default function App() {
   const [showFloatingCta, setShowFloatingCta] = useState(false);
   const pendingScrollTargetRef = useRef(null);
   const navLockRef = useRef(null);
+  const headerRef = useRef(null);
   const heroRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return undefined;
+    }
+
+    const updateHeaderOffset = () => {
+      const headerHeight = headerRef.current?.offsetHeight ?? 0;
+      document.documentElement.style.setProperty('--header-offset', `${headerHeight}px`);
+    };
+
+    updateHeaderOffset();
+    window.addEventListener('resize', updateHeaderOffset);
+
+    return () => {
+      window.removeEventListener('resize', updateHeaderOffset);
+      document.documentElement.style.removeProperty('--header-offset');
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -628,27 +656,56 @@ export default function App() {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const nextProgress = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
       const heroHeight = heroRef.current?.offsetHeight ?? 520;
-      const viewportMarker = scrollTop + 140;
-      const sectionIds = selectedProjectId
-        ? ['work', 'projects', 'case-study', 'skills', 'reach-out']
-        : ['work', 'projects', 'skills', 'reach-out'];
+      const headerHeight = headerRef.current?.offsetHeight ?? 64;
+      const sectionScrollOffset = headerHeight + 16;
+      const sectionTargets = selectedProjectId
+        ? [
+            { id: 'work', navSection: 'work' },
+            { id: 'projects', navSection: 'projects' },
+            { id: 'case-study', navSection: 'projects' },
+            { id: 'skills', navSection: 'skills' },
+            { id: 'contact', navSection: 'contact' },
+          ]
+        : [
+            { id: 'work', navSection: 'work' },
+            { id: 'projects', navSection: 'projects' },
+            { id: 'skills', navSection: 'skills' },
+            { id: 'contact', navSection: 'contact' },
+          ];
 
       let nextActiveSection = null;
+      const sectionMetrics = sectionTargets
+        .map(({ id, navSection }) => {
+          const element = document.getElementById(id);
 
-      sectionIds.forEach((id) => {
-        const element = document.getElementById(id);
-        if (element && viewportMarker >= element.offsetTop - 80) {
-          nextActiveSection = id;
-        }
-      });
+          if (!element) {
+            return null;
+          }
+
+          return {
+            navSection,
+            start: Math.max(element.offsetTop - sectionScrollOffset, 0),
+          };
+        })
+        .filter(Boolean);
+
+      const firstSectionStart = sectionMetrics[0]?.start ?? Number.POSITIVE_INFINITY;
+
+      if (scrollTop + 1 >= firstSectionStart) {
+        sectionMetrics.forEach(({ navSection, start }) => {
+          if (scrollTop + 1 >= start) {
+            nextActiveSection = navSection;
+          }
+        });
+      }
 
       if (scrollTop + window.innerHeight >= document.documentElement.scrollHeight - 40) {
-        nextActiveSection = 'reach-out';
+        nextActiveSection = 'contact';
       }
 
       const navLock = navLockRef.current;
       if (navLock) {
-        if (performance.now() < navLock.expiresAt && sectionIds.includes(navLock.section)) {
+        if (performance.now() < navLock.expiresAt && NAV_SECTION_IDS.includes(navLock.section)) {
           nextActiveSection = navLock.section;
         } else {
           navLockRef.current = null;
@@ -680,19 +737,10 @@ export default function App() {
 
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
-        document.getElementById(targetId)?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
+        scrollToId(targetId, headerRef.current?.offsetHeight ?? 0);
       });
     });
   }, [selectedProjectId]);
-
-  useEffect(() => {
-    if (!selectedProjectId && activeSection === 'case-study') {
-      setActiveSection(null);
-    }
-  }, [selectedProjectId, activeSection]);
 
   const activeProfileLinks = {
     cv: isActiveLink(profile.links.cv) ? profile.links.cv : null,
@@ -704,16 +752,17 @@ export default function App() {
 
   const selectedProject = projects.find((project) => project.id === selectedProjectId) ?? null;
   const detailsOpen = selectedProjectId ? Boolean(projectTechnicalDetails[selectedProjectId]) : false;
-  const hasCaseStudy = Boolean(selectedProject);
 
-  const handleSelectProject = (projectId, targetId = 'work') => {
+  const handleSelectProject = (projectId, targetId = 'case-study') => {
+    const navSection = getNavSection(targetId);
+
     if (projectId === selectedProjectId) {
-      scrollToId(targetId);
+      scrollToId(targetId, headerRef.current?.offsetHeight ?? 0);
       return;
     }
 
     navLockRef.current = {
-      section: targetId,
+      section: navSection,
       expiresAt: performance.now() + 1600,
     };
     pendingScrollTargetRef.current = targetId;
@@ -722,7 +771,7 @@ export default function App() {
       [projectId]: false,
     }));
     setSelectedProjectId(projectId);
-    setActiveSection(targetId);
+    setActiveSection(navSection);
   };
 
   const handleNavClick = (sectionKey) => {
@@ -745,8 +794,8 @@ export default function App() {
         profileData={profile}
         links={activeProfileLinks}
         activeSection={activeSection}
-        hasCaseStudy={hasCaseStudy}
         onNavClick={handleNavClick}
+        headerRef={headerRef}
       />
 
       <main id="top">
