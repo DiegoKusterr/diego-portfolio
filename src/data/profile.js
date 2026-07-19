@@ -40,19 +40,19 @@ export const profile = {
   ],
   skills: [
     {
-      group: 'Programming/ML',
-      items: ['Python', 'SQL', 'scikit-learn', 'ML models', 'R'],
+      group: 'Programming & Machine Learning',
+      items: ['Python', 'SQL', 'scikit-learn', 'Machine Learning models', 'R'],
     },
     {
-      group: 'Data Eng',
-      items: ['Snowflake', 'BigQuery', 'dbt', 'Spark (PySpark)', 'ETL', 'GCP'],
+      group: 'Data Engineering',
+      items: ['Snowflake', 'BigQuery', 'dbt', 'Spark (PySpark)', 'ETL', 'Google Cloud Platform'],
     },
     {
-      group: 'Apps/DevOps',
+      group: 'Application Development & DevOps',
       items: ['FastAPI', 'Docker', 'Git', 'Azure DevOps'],
     },
     {
-      group: 'BI/Automation',
+      group: 'Business Intelligence & Automation',
       items: ['Power BI', 'n8n', 'Power Automate', 'Excel/VBA'],
     },
   ],

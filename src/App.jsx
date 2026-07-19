@@ -563,7 +563,7 @@ function Skills({ groups }) {
       <div className="site-container">
         <div className="section-heading skills-heading">
           <span className="section-eyebrow">Skills</span>
-          <h2>Core tools across data engineering, analytics, ML and automation.</h2>
+          <h2>Core tools across data engineering, analytics, machine learning and automation.</h2>
         </div>
 
         <div className="skills-grid">
