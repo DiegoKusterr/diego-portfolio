@@ -18,7 +18,7 @@ export const profile = {
     title: 'Diego K\u00fcster Marqu\u00e9s',
     subtitle:
       'I build data pipelines, analytics systems and machine learning products that turn raw data into validated, decision-ready outputs.',
-    focusLine: 'Financial ML \u00b7 Lakehouse Analytics \u00b7 Data Quality \u00b7 AI Language Tools',
+    focusLine: 'Financial ML \u00b7 Lakehouse Analytics \u00b7 Data Quality \u00b7 Portfolio Analytics \u00b7 AI Language Tools',
   },
   credibilityItems: [
     {
