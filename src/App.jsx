@@ -58,9 +58,25 @@ function joinWithDots(items) {
 }
 
 const NAV_SECTION_IDS = ['work', 'projects', 'skills', 'contact'];
+const SECTION_FALLBACK_VIEWPORT_RATIO = 0.35;
 
 function getNavSection(sectionId) {
   return sectionId === 'case-study' ? 'projects' : sectionId;
+}
+
+function getSectionActivationStart(element, sectionScrollOffset, viewportHeight, maxScrollTop) {
+  const start = Math.max(element.offsetTop - sectionScrollOffset, 0);
+
+  if (start <= maxScrollTop) {
+    return start;
+  }
+
+  // Bottom sections cannot always reach the sticky-header trigger line, so
+  // activate them once a stable portion of the section enters the viewport.
+  return Math.min(
+    Math.max(element.offsetTop - viewportHeight * SECTION_FALLBACK_VIEWPORT_RATIO, 0),
+    maxScrollTop,
+  );
 }
 
 function scrollToId(id, headerOffset = 0) {
@@ -653,8 +669,9 @@ export default function App() {
 
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const nextProgress = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+      const viewportHeight = window.innerHeight;
+      const maxScrollTop = Math.max(document.documentElement.scrollHeight - viewportHeight, 0);
+      const nextProgress = maxScrollTop > 0 ? Math.min((scrollTop / maxScrollTop) * 100, 100) : 0;
       const heroHeight = heroRef.current?.offsetHeight ?? 520;
       const headerHeight = headerRef.current?.offsetHeight ?? 64;
       const sectionScrollOffset = headerHeight + 16;
@@ -684,7 +701,7 @@ export default function App() {
 
           return {
             navSection,
-            start: Math.max(element.offsetTop - sectionScrollOffset, 0),
+            start: getSectionActivationStart(element, sectionScrollOffset, viewportHeight, maxScrollTop),
           };
         })
         .filter(Boolean);
@@ -697,10 +714,6 @@ export default function App() {
             nextActiveSection = navSection;
           }
         });
-      }
-
-      if (scrollTop + window.innerHeight >= document.documentElement.scrollHeight - 40) {
-        nextActiveSection = 'contact';
       }
 
       const navLock = navLockRef.current;
