@@ -279,7 +279,6 @@ function Header({ profileData, links, activeSection, onNavClick, headerRef }) {
           </nav>
 
           <div className="header-links">
-            <ExternalLink link={links.cv} label="CV" />
             <ExternalLink link={links.linkedin} />
             <ExternalLink link={links.github} />
           </div>
@@ -304,7 +303,6 @@ function Hero({ profileData, links, heroRef }) {
             <a href="#projects" className="button-link button-link-primary">
               Explore Projects
             </a>
-            <ExternalLink link={links.cv} label="Download CV" />
             <ExternalLink link={links.meeting} label="Book a meeting" className="button-link-accent" />
           </div>
         </div>
@@ -599,7 +597,6 @@ function Contact({ note, availabilityLine, links }) {
           <div className="contact-links">
             <ExternalLink link={links.email} label="Email" />
             <ExternalLink link={links.meeting} label="Book a meeting" className="button-link-accent" />
-            <ExternalLink link={links.cv} label="CV" />
             <ExternalLink link={links.linkedin} />
             <ExternalLink link={links.github} />
           </div>
@@ -756,7 +753,6 @@ export default function App() {
   }, [selectedProjectId]);
 
   const activeProfileLinks = {
-    cv: isActiveLink(profile.links.cv) ? profile.links.cv : null,
     linkedin: isActiveLink(profile.links.linkedin) ? profile.links.linkedin : null,
     github: isActiveLink(profile.links.github) ? profile.links.github : null,
     email: isActiveLink(profile.links.email) ? profile.links.email : null,

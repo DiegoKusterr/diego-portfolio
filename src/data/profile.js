@@ -1,7 +1,6 @@
 const email = 'diegokusterma@gmail.com';
 const linkedinUrl = 'https://www.linkedin.com/in/diego-k%C3%BCster-marqu%C3%A9s/';
 const githubUrl = 'https://github.com/DiegoKusterr';
-const cvUrl = '/cv/Diego_Kuster_Marques_EN.pdf';
 const bookMeetingUrl = 'https://calendly.com/diegokusterma/30min';
 
 export const profile = {
@@ -10,7 +9,6 @@ export const profile = {
   email,
   linkedinUrl,
   githubUrl,
-  cvUrl,
   bookMeetingUrl,
   endorsements: [],
   hero: {
@@ -57,15 +55,10 @@ export const profile = {
     },
   ],
   contactNote:
-    'For the full professional background, use the CV. For technical depth, review the case studies and repositories.',
+    'For my full professional background, please contact me directly or review my LinkedIn profile.',
   availabilityLine:
     'Open to Data Engineering, Analytics, BI and ML roles in Switzerland and internationally.',
   links: {
-    cv: {
-      label: 'CV',
-      href: cvUrl,
-      download: true,
-    },
     linkedin: {
       label: 'LinkedIn',
       href: linkedinUrl,
