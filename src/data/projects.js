@@ -87,7 +87,7 @@ export const projects = [
     links: [
       {
         label: 'dbt Docs & Technical Demo',
-        url: 'https://diegokusterr.github.io/financial-lakehouse-analytics-pipeline/dbt-docs/',
+        url: 'https://diegokusterr.github.io/financial-lakehouse-analytics-pipeline/dbt-docs/#!/overview',
         type: 'demo',
       },
       {
